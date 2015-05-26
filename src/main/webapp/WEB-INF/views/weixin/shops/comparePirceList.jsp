@@ -1,0 +1,50 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set value="我的竞价"  var ="pageTitle"></c:set>
+<c:set value="custmerCenter"  var ="pageFootTab"></c:set>
+<%@include file="/WEB-INF/views/weixin/include/header.jsp" %>
+<style>
+/* a > span{padding-bottom: 15px;} */
+</style>
+<div class="myBodyDiv" >
+  <form action="${ctx }${baseMapper}comparePirceList" method="post" id="searchForm">
+	    <div class="form-group" style="margin-bottom: 1px;"><div class="input-group">
+		    <input class="form-control" name="search_LIKE_reqProduct.name" />
+		    <span class="input-group-addon" onclick="$('#searchForm').submit();"><span class="glyphicon glyphicon-search"></span>搜索</span>
+	    </div></div>
+    </form>
+    <table class="table table-striped table-bordered">
+    	<c:forEach items="${page.content }" var="comper" varStatus="index">
+    	<tr>
+    		<td><a href="${ctx }/weixin/reqproduct/reqProductDetail?id=${comper.reqProduct.id}">
+    		<img alt="产品图片" src="${ctx }${comper.reqProduct.coverImg.relativePath }" style="width: 50px;height: 50px;"/></a></td>
+    		<td><a href="${ctx }/weixin/reqproduct/reqProductDetail?id=${comper.reqProduct.id}">${comper.reqProduct.name }</a></td>
+    		<td><fmt:formatDate value="${comper.createTime }" pattern="yyyy-MM-dd"/></td>
+    		<td>${comper.reqProduct.price }</td>
+    	</tr>
+    	</c:forEach>
+    </table>
+    
+<c:if test="${pageUtil.pageNo gt 1 }">
+   <span class="glyphicon glyphicon-chevron-left" style="width: 35px;height: 35px;font-size: 35px;color: #08c;
+   position: fixed; top: 50%;z-index: 5;display: inline-block;left: 0px;" onclick="page(${pageUtil.pageNo-1})"></span>
+</c:if>
+
+<c:if test="${pageUtil.pageNo lt page.totalPages}">
+   <span class="glyphicon glyphicon-chevron-right" style="width: 35px;height: 35px;font-size: 35px;color: #08c;
+   position: fixed; top: 50%;z-index: 5;display: inline-block;right: 0px;" onclick="page(${pageUtil.pageNo+1})"></span>
+</c:if>
+    <form id="pageForm" action="${ctx }/weixin/user/weixinUserList" method="post">
+ <input id="pageNo" name="pageNo" value="${pageUtil.pageNo }" type="hidden"/>
+</form>
+    <script type="text/javascript">
+    function page(n){
+		$("#pageNo").val(n);
+		$("#pageForm").submit();
+    	return false;
+    }
+    </script>
+<div style="height: 50px;"></div>
+</div>
+<%@include file="/WEB-INF/views/weixin/include/footer.jsp" %>
+    

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"
+	default-lazy-init="true">
+
+	<description>quarz</description>
+	<!-- 
+	<bean id="receiveWeixinMsgJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" >
+		    <bean class="fuliao.fuliaozhijia.weixin.util.WeixinMsgUtilJob"></bean>
+		</property>
+		<property name="targetMethod" value="deailWeixinMsg" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="receiveWeixinMsgTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="receiveWeixinMsgJob" />
+		<property name="cronExpression" value="1 * * * * ?" />
+	</bean>
+		总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序
+	<bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false">
+		<property name="triggers"><list>
+		    <ref bean="receiveWeixinMsgTrigger"/>
+		</list></property>
+		<property name="autoStartup" value="true" />
+	</bean>
+ -->
+</beans>

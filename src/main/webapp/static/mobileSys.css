@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+.myBodyDiv {
+	border:1px solid #CCC;
+	padding:2px;
+	width:96%;
+    border-radius: 3px;
+    position: absolute;
+    top: 2%;
+    left:2%;
+    text-align: center;
+}
+.myNavTable{position:fixed; bottom:0px;background-color: #CCC;padding:2px;
+		width:100%;height: 50px;text-align: center;}
+.myNavTable th{border: 1px solid #eee;text-align: center;}
+.myNavTable th a >span{width: 100%;height: 100%;}
+.myActive{background-color: #cde;}
+a:hover{text-decoration: none;}
