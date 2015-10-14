@@ -64,7 +64,7 @@
 
                 <div class="control-group">
                     <div class="controls">
-                        <input type="password" id="password" name="password" class="required" placeholder="密码"/>
+                        <input type="password" id="password" name="password" class="text required" placeholder="密码"/>
                     </div>
                 </div>
                  <c:if test="${isValidateCodeLogin}"><div class="validateCode">

@@ -38,6 +38,7 @@ import fuliao.fuliaozhijia.core.entity.UserEntity;
 import fuliao.fuliaozhijia.core.util.CoreHttpClient;
 import fuliao.fuliaozhijia.core.util.ImageUtil;
 import fuliao.fuliaozhijia.core.util.SystemProperties;
+import fuliao.fuliaozhijia.weixin.util.WeixinAccessUtil;
 import fuliao.fuliaozhijia.weixin.util.WeixinMenuUtil;
 
 
@@ -46,7 +47,7 @@ public class UserData {
 
 	public static void main(String[] args) {
 //		url();
-		
+		WeixinAccessUtil.getAccessToken();
 	        byte[] salt = Digests.generateSalt(10);
 	       System.out.println(Encodes.encodeHex(salt));
 

@@ -112,7 +112,7 @@ public class WeixinController extends GenericeController<RequestProduct>{
 	 * 找回密码
 	 * @return
 	 */
-	@RequestMapping("forgetPwd")
+	@RequestMapping(value="forgetPwd",method=RequestMethod.GET)
 	public String forgetPwd(){
 		return "/weixin/forgetPwd";
 	}
@@ -127,7 +127,7 @@ public class WeixinController extends GenericeController<RequestProduct>{
 			if(null != user){
 				userSer.saveOrUpdate(user,null);
 				logger.info("用户修改密码"+user.getName());
-				return "forward:/weixin/login";
+				return "redirect:/weixin/login";
 			}
 		}else{
 			model.addAttribute("loginName", loginName);

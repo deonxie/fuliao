@@ -1,6 +1,7 @@
 package fuliao.fuliaozhijia.weixin.util;
 
 import java.io.IOException;
+import java.util.List;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheException;
@@ -13,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
-
 import fuliao.fuliaozhijia.core.util.CoreHttpClient;
 import fuliao.fuliaozhijia.core.util.SystemProperties;
 
@@ -24,6 +24,9 @@ public class WeixinAccessUtil {
 	private static String appId = SystemProperties.getInstance().getValue("WeixinMsgController.weixin.app.id");
 	private static String appSecret = SystemProperties.getInstance().getValue("WeixinMsgController.weixin.app.secret");
 	private static String access_token_key = "access_token_key";
+	private static String access_jsapi_key = "access_Jsapi_Token";
+	private final static String AccessToken = "AccessToken";
+	private final static String AccessJsapi = "AccessJsapi";
 	private static CacheManager cacheManager;
 	
 	/**初始化缓存对象管理器*/
@@ -31,6 +34,7 @@ public class WeixinAccessUtil {
 		try {
 			cacheManager = CacheManager.create(new ClassPathResource("/ehcache/ehcache-weixin.xml").getInputStream());
 			cacheManager.addCache(new Cache(access_token_key, 1, false, false, 7100, 7100));
+			cacheManager.addCache(new Cache(access_jsapi_key, 1, false, false, 7100, 7100));
 		} catch (CacheException e) {
 			logger.error("微信网络访问缓存管理器 加载失败",e);
 		} catch (IOException e) {
@@ -45,14 +49,12 @@ public class WeixinAccessUtil {
 	public static String getAccessToken(){
 		String token = null;
 		Cache cache = cacheManager.getCache(access_token_key);
-		Element element = cache.get("AccessToken");
+		
+		Element element = cache.get(AccessToken);
 		if(null == element){
 			token = accessToken();
-			cache.put(new Element("AccessToken", token));
-			String jsapiToken = jsapiToken(token);
-			cache.put(new Element("JsapiToken", jsapiToken));
-			logger.info("微信：AccessToken:{}，jsapiToken:{}",token,jsapiToken);
-			return token;
+			cache.put(new Element(AccessToken, token));
+			logger.info("微信：AccessToken:{}",token);
 		}else{
 			if(null != element.getObjectValue()){
 				token = element.getObjectValue().toString();
@@ -67,13 +69,12 @@ public class WeixinAccessUtil {
 	 */
 	public static String getJsapiToken(){
 		String jsapiToken = null;
-		Cache cache = cacheManager.getCache(access_token_key);
-		Element element = cache.get("JsapiToken");
+		Cache cache = cacheManager.getCache(access_jsapi_key);
+		Element element = cache.get(AccessJsapi);
 		if(null == element){
-			String token = accessToken();
-			cache.put(new Element("AccessToken", token));
+			String token = getAccessToken();
 			jsapiToken = jsapiToken(token);
-			cache.put(new Element("JsapiToken", jsapiToken));
+			cache.put(new Element(AccessJsapi, jsapiToken));
 			logger.info("微信：AccessToken:{}，jsapiToken:{}",token,jsapiToken);
 			return token;
 		}
